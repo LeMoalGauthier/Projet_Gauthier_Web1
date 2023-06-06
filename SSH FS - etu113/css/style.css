@@ -1,0 +1,190 @@
+/**
+Author: Gauthier LE MOAL
+Login : etu113
+Groupe: ISEN A3 GROUPE 1 Trinôme 6
+Annee: 2022-2023
+*/
+
+/* Body */
+* {
+    margin : 0;
+    padding: 0;
+}
+body {
+    font-family: "Montserrat", "Raleway", "Molengo", sans-serif;
+  }
+
+#dessin_container {
+    position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    top: 150px;
+    width: 100%;
+    flex-flow: column;
+    color: #FA6782;    
+}
+
+#dessin {
+    background-color: transparent;
+    width: 550px;
+    height: 395px;
+}
+
+#text_container {
+    width: 100%;
+    top:90px;
+    position:absolute;
+    text-align: center;
+    z-index: 1;
+    font: "Molengo";
+
+}
+
+#text {
+    position: relative;
+    top: 20px;;
+}
+
+#f_container {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 105px;
+    width: 400px;
+    height: 500px;
+    align-items: center;
+    font-size: small;
+    
+    background: rgba(252, 181, 170, 0.32);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+form label,
+form input,
+form select {
+    margin-bottom: 10px;
+    border:none;
+    margin-left: 10px;
+  }
+
+#agglo {
+    font-size: smaller;
+}
+
+#submit_button {
+    position: static;
+    margin-top: 15px;
+    width: 131px;
+    height: 28px;
+    left: 385px;
+    top: calc(50% - 28px/2 + 201px);
+    cursor: pointer;
+
+    background: #5E2B45;
+    border-radius: 20px;
+    color: #FA6782;
+    font-style: italic;
+}
+
+/* Header level 1 */
+#header {
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    left: 0%;
+    top: 0%;
+    
+    background: #5E2B45;
+    font-size : bold 70px;
+    list-style-type : none;
+    box-sizing: border-box;
+    font: "Raleway"
+}
+
+/* Header level 2 */
+#circle {
+    width: 60px;
+    height: 60px; 
+    background-color: #FA6782;
+    border-radius: 50%; 
+    position: absolute; 
+    top: 35px;
+    left: 100px; 
+    transform: translate(-50%, -50%);
+  }
+
+#add{
+    position: absolute;
+    width: 350px;
+    height: 40px;
+    left: 200px;
+    top: 25px;
+    
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 12px;
+    
+    color: #FA6782;
+}
+
+#visu{
+    position: absolute;
+    width: 350px;
+    height: 40px;
+    left: 375px;
+    top: 25px;
+    
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 12px;
+    
+    color: #FA6782;
+}
+
+#ia{
+    position: absolute;
+    width: 350px;
+    height: 40px;
+    left: 625px;
+    top: 25px;
+    
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 12px;
+    
+    color: #FA6782;
+}
+/* section */
+figcaption {
+    background-color: #5E2B45;
+    font: italic smaller sans-serif;
+    padding: 3px;
+    text-align: center;
+}
+/* Table */
+
+/* Forms */
+
+/* Footer */
+footer {
+    display :flex;
+    position:absolute;
+    width: 100%;
+    height: 50px;
+    left: 0;
+    bottom: 0;
+    color: #FA6782;
+    background: #5E2B45;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+}
+/* Authentication */
+
+/* Chat */
+
