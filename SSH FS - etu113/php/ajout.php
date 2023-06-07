@@ -37,7 +37,13 @@
         VALUES('$date_heure', '$latitude', '$longitude', '$age', '$descr_athmo', '$id_code_insee', '$descr_lum', '$descr_dispo_secu', '$descr_etat_surf', '$descr_cat_veh', '$descr_agglo', '$descr_type_col')";
         $statement = $db->prepare($request);
         $statement->execute();
-        $data=$request;
+        if ($statement->rowCount() > 0) {
+            // La commande a été exécutée avec succès
+            $data= "l'accident à été ajouté";
+        } else {
+            // La commande n'a pas été exécutée ou n'affecte aucune ligne
+            $data = "La commande n'a pas été exécutée";
+        }
 
           // Send data to the client.
   header('Content-Type: application/json; charset=utf-8');

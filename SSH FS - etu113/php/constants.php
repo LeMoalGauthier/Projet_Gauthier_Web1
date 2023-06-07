@@ -5,8 +5,9 @@
 //Annee:
 
 // Database constants.
-define('DB_USER', 'etu113');
-define('DB_PASSWORD', 'fttrngog');
-define('DB_NAME', 'etu113');
+define('DB_USER', 'etu115');
+define('DB_PASSWORD', 'fcsvberc');
+define('DB_NAME', 'etu115');
 define('DB_SERVER', 'localhost');
+
 ?>

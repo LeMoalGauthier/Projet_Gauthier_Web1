@@ -21,7 +21,10 @@ $(document).ready(function(){
       });
     });
 });
-
+//fonction qui rajoute un anti slache
+function escapeQuotes(str) {
+    return str.replace(/'/g, "\\'");
+  }
 var addForm = document.getElementById('addForm');
 addForm.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -39,6 +42,16 @@ addForm.addEventListener('submit', function(event) {
     var descr_cat_veh = document.getElementById('descr_cat_vehi').value;
     var descr_agglo = document.getElementById('descr_agglos').value;
     var descr_type_col = document.getElementById('descr_type_coli').value;
+    //modificaion si besoin des value en ajoutant un \ devant les '
+    //pour eviter les mauvaise requet sql
+    descr_athmo = escapeQuotes(descr_athmo);
+    id_code_insee = escapeQuotes(id_code_insee);
+    descr_lum = escapeQuotes(descr_lum);
+    descr_dispo_secu = escapeQuotes(descr_dispo_secu);
+    descr_etat_surf = escapeQuotes(descr_etat_surf);
+    descr_cat_veh = escapeQuotes(descr_cat_veh);
+    descr_agglo = escapeQuotes(descr_agglo);
+    descr_type_col = escapeQuotes(descr_type_col);
 
     // // Construire les données à envoyer au serveur
      var data = "date_heure=" + date_heure + "&latitude=" + latitude + "&longitude=" + longitude + "&age=" + 
@@ -47,7 +60,12 @@ addForm.addEventListener('submit', function(event) {
     "&descr_agglo=" + descr_agglo + "&descr_type_col=" + descr_type_col;
     // Envoyer la requête AJAX
     ajaxRequest('POST', 'php/ajout.php/form', function(response) {
+        if(response == "l'accident à été ajouté"){
+            addForm.innerHTML =`<p>${response}</p>`;
 
+        }else{
+            addForm.innerHTML =`<p>${response}</p>`;
+        }
       console.log(response);
   }, data);
 });

@@ -1,111 +1,92 @@
 /*
-Author: Gauthier LE MOAL
-Login : etu113
-Groupe: ISEN A3 GROUPE 1 Trinôme 6
-Annee: 2022-2023
+Author: Prenom NOM
+Login : etuXXX
+Groupe: ISEN X GROUPE Y
+Annee:
 */
-
-'use strict';
-
-ajaxRequest('GET', 'php/request.php/meteos', affiche_athmo);
-function affiche_athmo(data){
-  var sel = document.getElementById('descr_athmos');
-  data.forEach(elem => {
-  let opt = document.createElement('option');
-  opt.value = elem.descr_athmo;
-  opt.textContent += elem.descr_athmo // or opt.innerHTML += user.name
-  sel.appendChild(opt);
-      // console.log(element.nom);
-  });
-}
-
- ajaxRequest('GET', 'php/request.php/luminosites', affiche_lum);
-function affiche_lum(data){
-
-  var sel = document.getElementById('descr_lumi');
- data.forEach(elem => {
- let opt = document.createElement('option');
- opt.value = elem.descr_lum;
- opt.textContent += elem.descr_lum // or opt.innerHTML += user.name
- sel.appendChild(opt);
-     // console.log(element.nom);
- });
-}
-
-ajaxRequest('GET', 'php/request.php/ceintures', affiche_dispo_secu);
-function affiche_dispo_secu(data){
-
- var sel = document.getElementById('descr_dispo_secur');
-data.forEach(elem => {
-let opt = document.createElement('option');
-opt.value = elem.descr_dispo_secu;
-opt.textContent += elem.descr_dispo_secu // or opt.innerHTML += user.name
-sel.appendChild(opt);
-    // console.log(element.nom);
-});
-}
-
-ajaxRequest('GET', 'php/request.php/routes', affiche_etat_surf);
-function affiche_etat_surf(data){
-
-  var sel = document.getElementById('descr_etat_surfa');
- data.forEach(elem => {
- let opt = document.createElement('option');
- opt.value = elem.descr_etat_surf;
- opt.textContent += elem.descr_etat_surf // or opt.innerHTML += user.name
- sel.appendChild(opt);
-     // console.log(element.nom);
- });
- }
-
- ajaxRequest('GET', 'php/request.php/vehicules', affiche_cat_veh);
- function affiche_cat_veh(data){
-
-  var sel = document.getElementById('descr_cat_vehi');
- data.forEach(elem => {
- let opt = document.createElement('option');
- opt.value = elem.descr_cat_veh;
- opt.textContent += elem.descr_cat_veh // or opt.innerHTML += user.name
- sel.appendChild(opt);
-     // console.log(element.nom);
- });
- }
-
- ajaxRequest('GET', 'php/request.php/agglos', affiche_agglo);
- function affiche_agglo(data){
-
-  var sel = document.getElementById('descr_agglos');
- data.forEach(elem => {
- let opt = document.createElement('option');
- opt.value = elem.descr_agglo;
- opt.textContent += elem.descr_agglo // or opt.innerHTML += user.name
- sel.appendChild(opt);
-     // console.log(element.nom);
- });
- }
-
- ajaxRequest('GET', 'php/request.php/collisions', affiche_type_col);
- function affiche_type_col(data){
-
-  var sel = document.getElementById('descr_type_coli');
- data.forEach(elem => {
- let opt = document.createElement('option');
- opt.value = elem.descr_type_col;
- opt.textContent += elem.descr_type_col // or opt.innerHTML += user.name
- sel.appendChild(opt);
-     // console.log(element.nom);
- });
- }
-
- ajaxRequest('GET', 'php/request.php/ville', affiche_ville);
- function affiche_ville(data){
-
-  var sel = document.getElementById('ville');
- data.forEach(elem => {
- let opt = document.createElement('option');
- opt.value = elem.id_code_insee
- opt.textContent += elem.ville // or opt.innerHTML += user.name
- sel.appendChild(opt);
-     // console.log(element.nom);
- });
- }
+//fonction qui recuppère la valeur dans les cookie
+function getCookieValue(cookieName) {
+    var cookieValue = document.cookie.match('(^|;)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+  }
+  // Récupérer la valeur du cookie 'choix'
+  var choixValue = getCookieValue('choix');
+  
+  //affiche la carte de la base de donnée grande_table_accidents
+  
+  if (choixValue == "0") {
+    ajaxRequest('GET', 'php/request.php/liste', function (data) {
+      // Créer la carte
+      mapboxgl.accessToken = 'pk.eyJ1IjoiZW1pZTE4IiwiYSI6ImNsaDdxdXB2dDAxZmYzZW1tM3hhbWR3b24ifQ.zjp20nsMooS-xVfxn982pA'; // Remplacez YOUR_ACCESS_TOKEN par votre propre jeton d'accès Mapbox
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11', // Style de la carte (vous pouvez choisir un autre style)
+        center: [2.554071, 46.603354], // Centre initial de la carte
+        zoom: 4 // Niveau de zoom initial de la carte
+      });
+  
+      // Parcourir les données et ajouter des marqueurs à la carte
+      data.forEach(function (item) {
+        // Créer un élément HTML personnalisé pour le marqueur
+        var el = document.createElement('div');
+        el.className = 'marker2';
+  
+        // Ajouter le marqueur à la carte
+        var marker = new mapboxgl.Marker(el)
+          .setLngLat([item.longitude, item.latitude])
+          .addTo(map);
+  
+        // Ajouter un événement de survol pour afficher les informations
+        marker.getElement().addEventListener('mouseover', function () {
+          const info = document.getElementById('info');
+  
+          info.innerHTML = `<strong>Ville:</strong> ${item.ville}
+          <br><strong>Date:</strong> ${item.date_heure}
+          <br><strong>Âge Conducteur:</strong> ${item.age}
+          <br><strong>Gravité:</strong> ${item.descr_grav}
+          <br><strong>latitude </strong> ${item.latitude} <strong> longitude :</strong> ${item.longitude}
+          <br><strong>conditions atmosphériques:</strong> ${item.descr_athmo}
+          <br><strong>luminosité:</strong> ${item.descr_lum}
+          <br><strong>Etat de la surface:</strong> ${item.descr_etat_surf}
+          <br><strong>disposition sécurité:</strong> ${item.descr_dispo_secu}`;
+        });
+      });
+    });
+  } else if (choixValue == "1") {
+    ajaxRequest('GET', 'php/request.php/liste2', function (data) {
+      // Créer la carte
+      mapboxgl.accessToken = 'pk.eyJ1IjoiZW1pZTE4IiwiYSI6ImNsaDdxdXB2dDAxZmYzZW1tM3hhbWR3b24ifQ.zjp20nsMooS-xVfxn982pA'; // Remplacez YOUR_ACCESS_TOKEN par votre propre jeton d'accès Mapbox
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11', // Style de la carte (vous pouvez choisir un autre style)
+        center: [2.554071, 46.603354], // Centre initial de la carte
+        zoom: 4 // Niveau de zoom initial de la carte
+      });
+  
+      // Parcourir les données et ajouter des marqueurs à la carte
+      data.forEach(function (item) {
+        // Créer un élément HTML personnalisé pour le marqueur
+        var el = document.createElement('div');
+        el.className = 'marker';
+  
+        // Ajouter le marqueur à la carte
+        var marker = new mapboxgl.Marker(el)
+          .setLngLat([item.longitude, item.latitude])
+          .addTo(map);
+  
+        // Ajouter un événement de survol pour afficher les informations
+        marker.getElement().addEventListener('mouseover', function () {
+          const info = document.getElementById('info');
+  
+          info.innerHTML = `<strong>Ville:</strong> ${item.ville}
+            <br><strong>Date:</strong> ${item.date_heure}
+            <br><strong>Âge Conducteur:</strong> ${item.age}
+            <br><strong>latitude </strong> ${item.latitude} <strong> longitude :</strong> ${item.longitude}
+            <br><strong>conditions atmosphériques:</strong> ${item.descr_athmo}
+            <br><strong>luminosité:</strong> ${item.descr_lum}
+            <br><strong>Etat de la surface:</strong> ${item.descr_etat_surf}
+            <br><strong>disposition sécurité:</strong> ${item.descr_dispo_secu}`;
+        });
+      });
+    });
+  }
